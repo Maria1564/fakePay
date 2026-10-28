@@ -1,31 +1,26 @@
 import { useState } from "react";
 import style from "./LoginForm.module.css";
-import { user } from "../../data";
 
-const LoginForm = ({ setIsAuth }) => {
+const LoginForm = () => {
   const [fields, setFields] = useState({
-    login: "",
+    email: "",
     password: "",
   });
 
   const onLogin = () => {
-    if (fields.login !== user.login || fields.password !== user.password) {
-      alert("Неверный логин или пароль");
-      return;
-    }
-
-    setIsAuth(true);
+    
   };
 
   return (
     <div className={style.wrapper}>
+      <h1>Вход</h1>
       <form action="">
         <input
           type="text"
-          placeholder="логин"
-          value={fields.ligon}
+          placeholder="почта"
+          value={fields.email}
           onChange={(e) =>
-            setFields((prev) => ({ ...prev, login: e.target.value }))
+            setFields((prev) => ({ ...prev, email: e.target.value }))
           }
         />
         <input
