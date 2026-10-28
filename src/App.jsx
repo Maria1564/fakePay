@@ -3,6 +3,7 @@ import "./App.css";
 import { useNavigate } from "react-router";
 import { getUser } from "./api";
 import { getToken } from "./helpers";
+import { ROUTES } from "./consts";
 
 // получение данных пользователя их обработка
 const getDataAccount = async (token, setUser) => {
@@ -31,7 +32,7 @@ function App() {
 
   useEffect(() => {
     if (user.isAuth === false) {
-      navigate("/login", { replace: true });
+      navigate(`/${ROUTES.login}`, { replace: true });
     }
   }, [navigate, user.isAuth]);
 

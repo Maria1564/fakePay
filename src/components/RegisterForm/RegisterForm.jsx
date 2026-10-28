@@ -1,15 +1,60 @@
+import { Link } from "react-router";
+import { ROUTES } from "../../consts";
+import { useFormField } from "../../hooks/useFormField";
+
 const RegisterForm = () => {
+  const name = useFormField("", "Обязательное поле");
+  const email = useFormField("", "Обязательное поле");
+  const password = useFormField("", "Обязательное поле");
+
+  const onRegister = async() => {
+    const nameValid = name.validate();
+    const emailValid = email.validate();
+    const passwordValid = password.validate();
+
+    if (!nameValid || !emailValid || !passwordValid) {
+      return;
+    }
+
+    
+  };
+
   return (
     <div>
       <h2>Регистрация</h2>
       <form action="">
-        <input type="text" placeholder="имя" />
-        <input type="text" placeholder="почта" />
-        <input type="password" placeholder="пароль" />
-        <button type="button">Ок</button>
+        <input
+          type="text"
+          placeholder="имя"
+          value={name.value}
+          onChange={(event) => name.onChange(event)}
+        />
+        {name.errorMessage && (
+          <p style={{ color: "red" }}>{name.errorMessage}</p>
+        )}
+        <input
+          type="text"
+          placeholder="почта"
+          value={email.value}
+          onChange={(event) => email.onChange(event)}
+        />
+        {email.errorMessage && (
+          <p style={{ color: "red" }}>{email.errorMessage}</p>
+        )}
+        <input
+          type="password"
+          placeholder="пароль"
+          value={password.value}
+          onChange={(event) => password.onChange(event)}
+        />
+        {password.errorMessage && (
+          <p style={{ color: "red" }}>{password.errorMessage}</p>
+        )}
+        <button type="button" onClick={onRegister}>
+          Ок
+        </button>
       </form>
-
-    {/* <a href=""></a> */}
+      <Link to={`/${ROUTES.login}`}>Вход</Link>
     </div>
   );
 };

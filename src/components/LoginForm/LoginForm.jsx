@@ -1,8 +1,9 @@
 import { useState } from "react";
 import style from "./LoginForm.module.css";
 import { login } from "../../api";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useToast } from "../../hooks/useToast";
+import { ROUTES } from "../../consts";
 
 const LoginForm = () => {
   const [fields, setFields] = useState({
@@ -48,7 +49,6 @@ const LoginForm = () => {
     });
 
     if (!response.ok) {
-      //todo показывать тоаст
       open(result.error);
       return;
     }
@@ -94,6 +94,8 @@ const LoginForm = () => {
             Ок
           </button>
         </form>
+
+        <Link to={`/${ROUTES.register}`}>Регистрация</Link>
       </div>
 
       {isOpen ? <div className="">{text}</div> : null}

@@ -6,19 +6,23 @@ import App from "./App.jsx";
 import RegisterForm from "./components/RegisterForm";
 import LoginForm from "./components/LoginForm";
 import ListPlans from "./components/ListPlans";
+import { ROUTES } from "./consts.js";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/register" replace />} />
+        <Route
+          path="/"
+          element={<Navigate to={`/${ROUTES.register}`} replace />}
+        />
 
-        <Route path="register" element={<RegisterForm />} />
-        <Route path="login" element={<LoginForm />} />
+        <Route path={ROUTES.register} element={<RegisterForm />} />
+        <Route path={ROUTES.login} element={<LoginForm />} />
 
-        <Route path="home">
+        <Route path={ROUTES.home}>
           <Route index element={<App />} />
-          <Route path="plans" element={<ListPlans />} />
+          <Route path={ROUTES.plans} element={<ListPlans />} />
         </Route>
       </Routes>
     </BrowserRouter>
