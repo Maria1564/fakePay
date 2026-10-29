@@ -34,7 +34,6 @@ const Plan = ({ plan, isActivePlan, setActivePlan }) => {
     const result = await response.json();
 
     await fetch(`http://localhost:3001/api/payments/${result.payment.id}`);
-    localStorage.setItem("activePlan", result.payment.planId);
     
     setActivePlan(result.payment.planId);
     setLoading(false);

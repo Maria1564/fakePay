@@ -1,10 +1,14 @@
 //получение пользователя
 export const getUser = async (token) => {
-  return await fetch("http://localhost:3001/api/account", {
+  const response = await fetch("http://localhost:3001/api/account", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
+
+  const result = await response.json();
+
+  return { response, result };
 };
 
 //запрос на вход в аккаунт
@@ -21,7 +25,7 @@ export const login = async (dataForm) => {
 };
 
 //запрос на регистрацию пользователя
-export const register = async(dataForm) => {
+export const register = async (dataForm) => {
   const response = await fetch("http://localhost:3001/api/auth/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -31,4 +35,4 @@ export const register = async(dataForm) => {
   const result = await response.json();
 
   return { response, result };
-}
+};

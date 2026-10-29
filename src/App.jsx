@@ -1,42 +1,21 @@
-import { useEffect, useState } from "react";
 import "./App.css";
-import { useNavigate } from "react-router";
-import { getUser } from "./api";
-import { getToken } from "./helpers";
-import { ROUTES } from "./consts";
-
-// получение данных пользователя их обработка
-const getDataAccount = async (token, setUser) => {
-  const response = await getUser(token);
-
-  if (!response.ok) {
-    setUser({ isAuth: false, info: {} });
-    return;
-  }
-
-  const result = await response.json();
-  setUser({ isAuth: true, info: result });
-};
+import ListPlans from "./components/ListPlans/ListPlans";
+import { useAuth } from "./hooks/useAuth";
 
 function App() {
-  const [user, setUser] = useState({
-    isAuth: null,
-    info: {},
-  });
+  const auth = useAuth();
 
-  const navigate = useNavigate();
+  console.log("user >> ", auth.configUser);
+  console.log("loading >> ", auth.loading);
+  console.log("error >> ", auth.error);
 
-  useEffect(() => {
-    getDataAccount(getToken(), setUser);
-  }, []);
-
-  useEffect(() => {
-    if (user.isAuth === false) {
-      navigate(`/${ROUTES.login}`, { replace: true });
-    }
-  }, [navigate, user.isAuth]);
-
-  return <h1>Главная страница</h1>;
+  return (
+    <div className="">
+      <h1>Добро пожаловать на музыкальный сервис</h1>
+      <p>Слушайте музыку до посинения)</p>
+      <ListPlans />
+    </div>
+  );
 }
 
 export default App;
