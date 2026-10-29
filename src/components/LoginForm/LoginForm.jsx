@@ -1,51 +1,29 @@
-import { useState } from "react";
 import style from "./LoginForm.module.css";
 import { login } from "../../api";
 import { Link, useNavigate } from "react-router";
 import { useToast } from "../../hooks/useToast";
 import { ROUTES } from "../../consts";
+import { useFormField } from "../../hooks/useFormField";
 
 const LoginForm = () => {
-  const [fields, setFields] = useState({
-    email: { value: "", error: "" },
-    password: { value: "", error: "" },
-  });
+  const email = useFormField("", "Поле обязательно");
+  const password = useFormField("", "Поле обязательно");
 
   const { text, isOpen, open } = useToast();
 
   const navigate = useNavigate();
 
   const onLogin = async () => {
-    //валидация
-    if (fields.email.value.trim() === "") {
-      setFields((prev) => ({
-        ...prev,
-        email: { ...prev.email, error: "Почта обязательна" },
-      }));
-      return;
-    } else {
-      setFields((prev) => ({
-        ...prev,
-        email: { ...prev.email, error: "" },
-      }));
-    }
+    const emailValid = email.validate();
+    const passwordValid = password.validate();
 
-    if (fields.password.value.trim() === "") {
-      setFields((prev) => ({
-        ...prev,
-        password: { ...prev.password, error: "Пароль обязателен" },
-      }));
+    if (!emailValid || !passwordValid) {
       return;
-    } else {
-      setFields((prev) => ({
-        ...prev,
-        password: { ...prev.password, error: "" },
-      }));
     }
 
     const { response, result } = await login({
-      email: fields.email.value,
-      password: fields.password.value,
+      email: email.value,
+      password: password.value,
     });
 
     if (!response.ok) {
@@ -54,7 +32,7 @@ const LoginForm = () => {
     }
 
     document.cookie = `token=${result.token}`;
-    navigate("/home", { replace: true });
+    navigate(`/${ROUTES.home}`, { replace: true });
   };
 
   return (
@@ -65,30 +43,20 @@ const LoginForm = () => {
           <input
             type="text"
             placeholder="почта"
-            value={fields.email.value}
-            onChange={(e) =>
-              setFields((prev) => ({
-                ...prev,
-                email: { ...prev.email, value: e.target.value },
-              }))
-            }
+            value={email.value}
+            onChange={(e) => email.onChange(e)}
           />
-          {fields.email.error && (
-            <p style={{ color: "red" }}>{fields.email.error}</p>
+          {email.errorMessage && (
+            <p style={{ color: "red" }}>{email.errorMessage}</p>
           )}
           <input
             type="password"
             placeholder="пароль"
-            value={fields.password.value}
-            onChange={(e) =>
-              setFields((prev) => ({
-                ...prev,
-                password: { ...prev.password, value: e.target.value },
-              }))
-            }
+            value={password.value}
+            onChange={(e) => password.onChange(e)}
           />
-          {fields.password.error && (
-            <p style={{ color: "red" }}>{fields.password.error}</p>
+          {password.errorMessage && (
+            <p style={{ color: "red" }}>{password.errorMessage}</p>
           )}
           <button type="button" onClick={onLogin}>
             Ок
