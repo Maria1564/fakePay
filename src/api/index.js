@@ -36,3 +36,12 @@ export const register = async (dataForm) => {
 
   return { response, result };
 };
+
+/*************************  Оплата ************************/
+
+//запрос на список тарифов
+export const getAllPlans = async () => {
+  const response = await fetch("http://localhost:3001/api/plans");
+
+  return await response.json();
+};

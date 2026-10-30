@@ -64,6 +64,7 @@ const LoginForm = () => {
         </form>
 
         <Link to={`/${ROUTES.register}`}>Регистрация</Link>
+        <Link to={`/${ROUTES.home}`}>На главный</Link>
       </div>
 
       {isOpen ? <div className="">{text}</div> : null}

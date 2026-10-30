@@ -12,23 +12,20 @@ import AuthProvider from "./contexts/auth/AuthProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route
-            path="/"
-            element={<Navigate to={`/${ROUTES.register}`} replace />}
-          />
+  <BrowserRouter>
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Navigate to={`/${ROUTES.home}`} replace />} />
 
-          <Route path={ROUTES.register} element={<RegisterForm />} />
-          <Route path={ROUTES.login} element={<LoginForm />} />
+        <Route path={ROUTES.register} element={<RegisterForm />} />
+        <Route path={ROUTES.login} element={<LoginForm />} />
 
-          <Route path={ROUTES.home} element={<Layout />}>
-            <Route index element={<App />} />
-            <Route path={ROUTES.plans} element={<ListPlans />} />
-          </Route>
-        </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+        <Route path={ROUTES.home} element={<Layout />}>
+          <Route index element={<App />} />
+          <Route path={ROUTES.plans} element={<ListPlans />} />
+        </Route>
+      </Routes>
+    </AuthProvider>
+  </BrowserRouter>,
   // </StrictMode>,
 );

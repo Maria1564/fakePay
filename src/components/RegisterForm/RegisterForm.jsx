@@ -76,6 +76,7 @@ const RegisterForm = () => {
           </button>
         </form>
         <Link to={`/${ROUTES.login}`}>Вход</Link>
+        <Link to={`/${ROUTES.home}`}>На главный</Link>
       </div>
 
       {toast.isOpen ? <div className="">{toast.text}</div> : <></>}

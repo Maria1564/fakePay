@@ -1,41 +1,34 @@
 import { useState } from "react";
+import { useModal } from "../../../hooks/useModal";
 
-const Plan = ({ plan, isActivePlan, setActivePlan }) => {
-  const [isShowModal, setIsShowModal] = useState({
-    modalOrder: false,
-    modalPaied: false,
-  });
-
+const Plan = ({ plan }) => {
+  const modalOrder = useModal();
+  const modalPay = useModal();
+  
   const [loading, setLoading] = useState(false);
+  const onOpenModal = () => modalOrder.open();
 
-  const onOpenModal = () => {
-    setIsShowModal((prev) => ({ ...prev, modalOrder: true }));
-  };
-
-  const onCancel = () => {
-    setIsShowModal((prev) => ({ ...prev, modalOrder: false }));
-  };
+  const onCancel = () => modalOrder.close();
 
   const onPay = async () => {
-    setIsShowModal((prev) => ({ ...prev, modalOrder: false }));
-    setIsShowModal((prev) => ({ ...prev, modalPaied: true }));
+    // modalOrder.close();
+    // modalPay.open();
 
-    setLoading(true);
+    // setLoading(true);
 
-    const response = await fetch("http://localhost:3001/api/payments", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId: "vasy32",
-        planId: plan.name.toLowerCase(),
-      }),
-    });
+    // const response = await fetch("http://localhost:3001/api/payments", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     userId: "vasy32",
+    //     planId: plan.name.toLowerCase(),
+    //   }),
+    // });
 
-    const result = await response.json();
+    // const result = await response.json();
 
-    await fetch(`http://localhost:3001/api/payments/${result.payment.id}`);
-    
-    setActivePlan(result.payment.planId);
+    // await fetch(`http://localhost:3001/api/payments/${result.payment.id}`);
+
     setLoading(false);
   };
 
@@ -46,12 +39,10 @@ const Plan = ({ plan, isActivePlan, setActivePlan }) => {
         <p>
           {plan.price} {plan.currency}
         </p>
-        <button onClick={onOpenModal} disabled={isActivePlan}>
-          Получить
-        </button>
+        <button onClick={onOpenModal}>Получить</button>
       </div>
 
-      {isShowModal.modalOrder ? (
+      {modalOrder.isOpen ? (
         <div>
           Оплатить тариф {plan.name}
           <button onClick={onPay}>Подтвердить</button>
@@ -61,7 +52,7 @@ const Plan = ({ plan, isActivePlan, setActivePlan }) => {
         <></>
       )}
 
-      {isShowModal.modalPaied ? (
+      {modalPay.isOpen ? (
         <div>{loading ? "Обработка данных..." : "Оплата успешно прошла"}</div>
       ) : (
         <></>

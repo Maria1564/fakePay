@@ -15,7 +15,8 @@ const AuthProvider = ({ children }) => {
     getUser(getToken())
       .then(({ response, result }) => {
         if (!response.ok) {
-          setError(result.error);
+          console.log(response);
+          setError({ errorMess: result.error, status: response.status });
         } else {
           setConfigUser(result);
         }
