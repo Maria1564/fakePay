@@ -1,20 +1,33 @@
 import { useState } from "react";
 import { useModal } from "../../../hooks/useModal";
+import { isUnauthorizedError } from "../../../helpers";
+import { ROUTES } from "../../../consts";
+import { useNavigate } from "react-router";
 
-const Plan = ({ plan }) => {
+const Plan = ({ plan, configUser }) => {
   const modalOrder = useModal();
   const modalPay = useModal();
-  
+
   const [loading, setLoading] = useState(false);
-  const onOpenModal = () => modalOrder.open();
+
+  const navigate = useNavigate();
+
+  const onOpenModal = () => {
+    if (isUnauthorizedError(configUser.error)) {
+      navigate(`/${ROUTES.login}`, { replace: true });
+      return;
+    }
+
+    modalOrder.open();
+  };
 
   const onCancel = () => modalOrder.close();
 
   const onPay = async () => {
-    // modalOrder.close();
-    // modalPay.open();
+    modalOrder.close();
+    modalPay.open();
 
-    // setLoading(true);
+    setLoading(true);
 
     // const response = await fetch("http://localhost:3001/api/payments", {
     //   method: "POST",
@@ -28,8 +41,9 @@ const Plan = ({ plan }) => {
     // const result = await response.json();
 
     // await fetch(`http://localhost:3001/api/payments/${result.payment.id}`);
-
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
   };
 
   return (
@@ -39,7 +53,9 @@ const Plan = ({ plan }) => {
         <p>
           {plan.price} {plan.currency}
         </p>
-        <button onClick={onOpenModal}>Получить</button>
+        <button onClick={onOpenModal} disabled={configUser.loading}>
+          Получить
+        </button>
       </div>
 
       {modalOrder.isOpen ? (

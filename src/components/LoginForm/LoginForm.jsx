@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router";
 import { useToast } from "../../hooks/useToast";
 import { ROUTES } from "../../consts";
 import { useFormField } from "../../hooks/useFormField";
+import { useAuth } from "../../hooks/useAuth";
 
 const LoginForm = () => {
   const email = useFormField("", "Поле обязательно");
@@ -12,6 +13,8 @@ const LoginForm = () => {
   const { text, isOpen, open } = useToast();
 
   const navigate = useNavigate();
+
+  const { updateAuthState } = useAuth();
 
   const onLogin = async () => {
     const emailValid = email.validate();
@@ -32,6 +35,7 @@ const LoginForm = () => {
     }
 
     document.cookie = `token=${result.token}`;
+    updateAuthState();
     navigate(`/${ROUTES.home}`, { replace: true });
   };
 

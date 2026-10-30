@@ -4,28 +4,33 @@ import { getUser } from "../../api/index.js";
 import { getToken } from "../../helpers.js";
 
 const AuthProvider = ({ children }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [configUser, setConfigUser] = useState(null);
+  const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+  const updateAuthState = () => {
     setLoading(true);
 
     getUser(getToken())
       .then(({ response, result }) => {
         if (!response.ok) {
-          console.log(response);
           setError({ errorMess: result.error, status: response.status });
+          setUser(null);
         } else {
-          setConfigUser(result);
+          setError(null);
+          setUser(result);
         }
       })
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    updateAuthState();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ loading, error, configUser }}>
+    <AuthContext.Provider value={{ loading, error, user, updateAuthState }}>
       {children}
     </AuthContext.Provider>
   );

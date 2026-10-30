@@ -3,6 +3,7 @@ import { ROUTES } from "../../consts";
 import { useFormField } from "../../hooks/useFormField";
 import { register } from "../../api";
 import { useToast } from "../../hooks/useToast";
+import { useAuth } from "../../hooks/useAuth";
 
 const RegisterForm = () => {
   const name = useFormField("", "Обязательное поле");
@@ -12,6 +13,8 @@ const RegisterForm = () => {
   const toast = useToast();
 
   const navigate = useNavigate();
+
+  const { updateAuthState } = useAuth();
 
   const onRegister = async () => {
     const nameValid = name.validate();
@@ -36,6 +39,7 @@ const RegisterForm = () => {
     }
 
     document.cookie = `token=${result.token}`;
+    updateAuthState();
     navigate(`/${ROUTES.home}`, { replace: true });
   };
 
