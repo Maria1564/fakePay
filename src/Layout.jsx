@@ -1,10 +1,18 @@
 import { Link, NavLink, Outlet } from "react-router";
 import { ROUTES, STATUS_AUTH } from "./consts";
 import { useAuth } from "./hooks/useAuth";
-import { getAuthCheckStatus } from "./helpers";
+import { getAuthCheckStatus, getToken } from "./helpers";
+import { logout } from "./api";
 
 const Layout = () => {
   const configUser = useAuth();
+
+  const onLogout = async () => {
+    // удаление токена из куки
+    await logout(getToken());
+    document.cookie = "token=; max-age=0; path=/";
+    configUser.updateAuthState();
+  };
 
   return (
     <div>
@@ -15,7 +23,7 @@ const Layout = () => {
         </div>
 
         {getAuthCheckStatus(configUser) === STATUS_AUTH.authenticated ? (
-          <button>Выйти</button>
+          <button onClick={onLogout}>Выйти</button>
         ) : (
           <></>
         )}

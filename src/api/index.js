@@ -37,6 +37,16 @@ export const register = async (dataForm) => {
   return { response, result };
 };
 
+//запрос на  выход из учётки
+export const logout = async (token) => {
+  await fetch("http://localhost:3001/api/auth/logout", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 /*************************  Тарифы ************************/
 
 //запрос на список тарифов
