@@ -5,8 +5,9 @@ export const ROUTES = {
   plans: "plans",
 };
 
-export const STATUS_REQUEST = {
+export const STATUS_AUTH = {
   pending: "pending",
   error: "error",
-  successful: "successful"
+  guest: "guest",
+  authenticated: "authenticated"
 }

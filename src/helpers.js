@@ -1,4 +1,4 @@
-import { STATUS_REQUEST } from "./consts";
+import { STATUS_AUTH } from "./consts";
 
 // получение токена из куки
 export const getToken = () => {
@@ -26,17 +26,16 @@ export const isUnauthorizedError = (error) => {
 //статус запроса на получение пользователя
 export const getAuthCheckStatus = ({ loading, error, user }) => {
   if (loading) {
-    return STATUS_REQUEST.pending;
+    return STATUS_AUTH.pending;
   }
 
-  if (hasUser(user) || isUnauthorizedError(error)) {
-    return STATUS_REQUEST.successful;
+  if (hasUser(user)) {
+    return STATUS_AUTH.authenticated;
   }
 
-  return STATUS_REQUEST.error;
+  if (isUnauthorizedError(error)) {
+    return STATUS_AUTH.guest;
+  }
+
+  return STATUS_AUTH.error;
 };
-
-//проверка что запрос выполнился и пользователь авторизован
-export const isAuthenticated = (configUser) =>
-  getAuthCheckStatus(configUser) === STATUS_REQUEST.successful &&
-  hasUser(configUser.user);

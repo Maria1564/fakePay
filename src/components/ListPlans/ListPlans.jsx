@@ -3,7 +3,8 @@ import styles from "./ListPlans.module.css";
 import { getAllPlans } from "../../api";
 import Plan from "./Plan";
 import { useAuth } from "../../hooks/useAuth";
-import { isAuthenticated } from "../../helpers";
+import { getAuthCheckStatus } from "../../helpers";
+import { STATUS_AUTH } from "../../consts";
 
 const ListPlans = () => {
   const [plans, setPlan] = useState([]);
@@ -14,14 +15,15 @@ const ListPlans = () => {
   }, []);
 
   const activeUserPlan = useMemo(() => {
-    if (isAuthenticated(configUser) && configUser.user.user.subscription) {
+    if (
+      getAuthCheckStatus(configUser) === STATUS_AUTH.authenticated &&
+      configUser.user.user.subscription
+    ) {
       return configUser.user.user.subscription.planId;
     }
 
     return "";
   }, [configUser]);
-
-  console.log(activeUserPlan);
 
   return (
     <div className={styles.wrapper}>
