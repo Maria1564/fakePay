@@ -1,14 +1,22 @@
 import { useEffect, useState, useMemo } from "react";
-import styles from "./ListPlans.module.css";
+import style from "./ListPlans.module.css";
 import { getAllPlans } from "../../api";
 import Plan from "./Plan";
 import { useAuth } from "../../hooks/useAuth";
 import { getAuthCheckStatus } from "../../helpers";
-import { STATUS_AUTH } from "../../consts";
+import { ROUTES, STATUS_AUTH } from "../../consts";
+import { useModal } from "../../hooks/useModal";
+import CustomModal from "../share/CustomModal";
+import { Check } from "lucide-react";
+import { useNavigate } from "react-router";
 
 const ListPlans = () => {
   const [plans, setPlan] = useState([]);
   const configUser = useAuth();
+
+  const modalPay = useModal();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllPlans().then((data) => setPlan(data.plans));
@@ -25,20 +33,46 @@ const ListPlans = () => {
     return "";
   }, [configUser]);
 
+  const onCloseModalPay = () => modalPay.close();
+
+  const redirectToMusic = () => navigate(`/${ROUTES.home}`, { replace: true });
+
   return (
-    <div className={styles.plans__wrapper}>
-      <h2>Список тарифов</h2>
-      <div className={styles.plans__list}>
-        {plans?.map((plan) => (
-          <Plan
-            key={plan.id}
-            plan={plan}
-            configUser={configUser}
-            isActivePlan={plan.name.toLowerCase() === activeUserPlan}
-          />
-        ))}
+    <>
+      <div className={style.plans__wrapper}>
+        <h2>Список тарифов</h2>
+        <div className={style.plans__list}>
+          {plans?.map((plan) => (
+            <Plan
+              key={plan.id}
+              plan={plan}
+              configUser={configUser}
+              isActivePlan={plan.name.toLowerCase() === activeUserPlan}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+
+      {!modalPay.isOpen ? (
+        <CustomModal
+          icon={
+            <div className={style.check}>
+              <Check color="black" size={34} />
+            </div>
+          }
+          title={"Тариф успешно оплачен"}
+          description={`Подписка  активна. Музыка без ограничений уже доступна в вашем аккаунте.`}
+          firstBtn={"Перейти к музыке"}
+          firstHadleClick={redirectToMusic}
+          secondBtn={"Закрыть"}
+          secondHandleClick={onCloseModalPay}
+        >
+          <div className={style.modal__content}>текст</div>
+        </CustomModal>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 

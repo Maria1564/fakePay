@@ -1,45 +1,42 @@
-import { useState } from "react";
-import { useModal } from "../../../hooks/useModal";
-import { isUnauthorizedError } from "../../../helpers";
-import { ROUTES } from "../../../consts";
-import { useNavigate } from "react-router";
-import { createPayment, getPayment } from "../../../api";
+
 import style from "./Plan.module.css";
 
+
 const Plan = ({ plan, configUser, isActivePlan }) => {
-  const modalOrder = useModal();
-  const modalPay = useModal();
+  // const modalOrder = useModal();
+  
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const onOpenModal = () => {
-    if (isUnauthorizedError(configUser.error)) {
-      navigate(`/${ROUTES.login}`, { replace: true });
-      return;
-    }
+  // const onOpenModal = () => {
+  //   if (isUnauthorizedError(configUser.error)) {
+  //     navigate(`/${ROUTES.login}`, { replace: true });
+  //     return;
+  //   }
 
-    modalOrder.open();
-  };
+  //   modalOrder.open();
+  // };
 
-  const onCancel = () => modalOrder.close();
+  // const onCancel = () => modalOrder.close();
 
-  const onPay = async () => {
-    modalOrder.close();
-    modalPay.open();
 
-    setLoading(true);
+  // const onPay = async () => {
+  //   modalOrder.close();
+  //   modalPay.open();
 
-    const userId = configUser.user.user.id;
-    const planId = plan.name.toLowerCase();
-    const result = await createPayment({ userId, planId });
+  //   setLoading(true);
 
-    await getPayment(result.payment.id);
-    configUser.updateAuthState();
+  //   const userId = configUser.user.user.id;
+  //   const planId = plan.name.toLowerCase();
+  //   const result = await createPayment({ userId, planId });
 
-    setLoading(false);
-  };
+  //   await getPayment(result.payment.id);
+  //   configUser.updateAuthState();
+
+  //   setLoading(false);
+  // };
 
   return (
     <>
@@ -52,7 +49,6 @@ const Plan = ({ plan, configUser, isActivePlan }) => {
         {!isActivePlan && (
           <button
             className={style.card__btn}
-            onClick={onOpenModal}
             disabled={configUser.loading}
           >
             Выбрать тариф
@@ -60,7 +56,7 @@ const Plan = ({ plan, configUser, isActivePlan }) => {
         )}
       </div>
 
-      {modalOrder.isOpen ? (
+      {/* {modalOrder.isOpen ? (
         <div>
           Оплатить тариф {plan.name}
           <button onClick={onPay}>Подтвердить</button>
@@ -68,13 +64,9 @@ const Plan = ({ plan, configUser, isActivePlan }) => {
         </div>
       ) : (
         <></>
-      )}
+      )} */}
 
-      {modalPay.isOpen ? (
-        <div>{loading ? "Обработка данных..." : "Оплата успешно прошла"}</div>
-      ) : (
-        <></>
-      )}
+      
     </>
   );
 };
