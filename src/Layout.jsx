@@ -1,7 +1,12 @@
 import { Link, NavLink, Outlet } from "react-router";
 import { ROUTES, STATUS_REQUEST } from "./consts";
 import { useAuth } from "./hooks/useAuth";
-import { getAuthCheckStatus, isAuthenticated } from "./helpers";
+import {
+  getAuthCheckStatus,
+  hasUser,
+  isAuthenticated,
+  isUnauthorizedError,
+} from "./helpers";
 
 const Layout = () => {
   const configUser = useAuth();
@@ -14,15 +19,11 @@ const Layout = () => {
           <NavLink to={`/${ROUTES.home}/${ROUTES.plans}`}>Тарифы</NavLink>
         </div>
 
-        {getAuthCheckStatus(configUser) === STATUS_REQUEST.successful &&
-        isAuthenticated(configUser.user) ? (
-          <button>Выйти</button>
-        ) : (
-          <></>
-        )}
+        {isAuthenticated(configUser) ? <button>Выйти</button> : <></>}
 
         {getAuthCheckStatus(configUser) === STATUS_REQUEST.successful &&
-        !isAuthenticated(configUser.user) ? (
+        !hasUser(configUser.user) &&
+        isUnauthorizedError(configUser.error) ? (
           <>
             <Link to={`/${ROUTES.register}`}>Регистрация</Link>
             <Link to={`/${ROUTES.login}`}>Вход</Link>

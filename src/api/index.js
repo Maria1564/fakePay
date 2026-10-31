@@ -37,11 +37,29 @@ export const register = async (dataForm) => {
   return { response, result };
 };
 
-/*************************  Оплата ************************/
+/*************************  Тарифы ************************/
 
 //запрос на список тарифов
 export const getAllPlans = async () => {
   const response = await fetch("http://localhost:3001/api/plans");
 
   return await response.json();
+};
+
+/*************************  Оплата ************************/
+
+//запрос на оплату выбранного тарифа
+export const createPayment = async (data) => {
+  const response = await fetch("http://localhost:3001/api/payments", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  return await response.json();
+};
+
+//запрос на проверку оплаты, и получение данных об оплате
+export const getPayment = async (paymentId) => {
+  await fetch(`http://localhost:3001/api/payments/${paymentId}`);
 };

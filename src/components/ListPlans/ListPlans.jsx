@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import styles from "./ListPlans.module.css";
 import { getAllPlans } from "../../api";
 import Plan from "./Plan";
-import {useAuth} from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
+import { isAuthenticated } from "../../helpers";
 
 const ListPlans = () => {
   const [plans, setPlan] = useState([]);
@@ -12,12 +13,26 @@ const ListPlans = () => {
     getAllPlans().then((data) => setPlan(data.plans));
   }, []);
 
+  const activeUserPlan = useMemo(() => {
+    if (isAuthenticated(configUser) && configUser.user.user.subscription) {
+      return configUser.user.user.subscription.planId;
+    }
+
+    return "";
+  }, [configUser]);
+
+  console.log(activeUserPlan);
 
   return (
     <div className={styles.wrapper}>
       Список тарифов
       {plans?.map((plan) => (
-        <Plan key={plan.id} plan={plan} configUser={configUser} />
+        <Plan
+          key={plan.id}
+          plan={plan}
+          configUser={configUser}
+          isActivePlan={plan.name.toLowerCase() === activeUserPlan}
+        />
       ))}
     </div>
   );

@@ -1,7 +1,11 @@
 import "./App.css";
 import ListPlans from "./components/ListPlans/ListPlans";
+import { useAuth } from "./hooks/useAuth";
 
 function App() {
+  const auth = useAuth();
+
+  console.log(auth.user);
 
   return (
     <div className="">
