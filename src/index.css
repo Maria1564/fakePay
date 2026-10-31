@@ -5,6 +5,7 @@
   --red: #e61919;
   --white: #ffffff;
   --gray: #b3aaaa;
+  --green: #1ed65e;
 }
 
 body {
@@ -43,4 +44,14 @@ button {
 button:hover {
   opacity: 0.8;
   transform: scale(0.98);
+}
+
+button:disabled {
+  background-color: var(--gray);
+  cursor: not-allowed;
+}
+
+button:disabled:hover {
+    transform: none;
+    opacity: 1;
 }

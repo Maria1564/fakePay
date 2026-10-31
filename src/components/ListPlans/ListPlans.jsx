@@ -1,22 +1,27 @@
 import { useEffect, useState, useMemo } from "react";
 import style from "./ListPlans.module.css";
-import { getAllPlans } from "../../api";
+import { createPayment, getAllPlans, getPayment } from "../../api";
 import Plan from "./Plan";
 import { useAuth } from "../../hooks/useAuth";
 import { getAuthCheckStatus } from "../../helpers";
 import { ROUTES, STATUS_AUTH } from "../../consts";
 import { useModal } from "../../hooks/useModal";
 import CustomModal from "../share/CustomModal";
-import { Check } from "lucide-react";
+import { Check, ShoppingBag } from "lucide-react";
 import { useNavigate } from "react-router";
 
 const ListPlans = () => {
   const [plans, setPlan] = useState([]);
   const configUser = useAuth();
 
+  const [selectedPlan, setSelectedPlan] = useState(null);
+
   const modalPay = useModal();
+  const modalOrder = useModal();
 
   const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getAllPlans().then((data) => setPlan(data.plans));
@@ -35,7 +40,27 @@ const ListPlans = () => {
 
   const onCloseModalPay = () => modalPay.close();
 
-  const redirectToMusic = () => navigate(`/${ROUTES.home}`, { replace: true });
+  const redirectToMusic = () => {
+    navigate(`/${ROUTES.home}`, { replace: true });
+    modalPay.close();
+  };
+
+  const onCancel = () => modalOrder.close();
+
+  const onPay = async (e) => {
+    setLoading(true);
+    e.target.disabled = true;
+    const userId = configUser.user.user.id;
+    const planId = selectedPlan.name.toLowerCase();
+    const result = await createPayment({ userId, planId });
+
+    await getPayment(result.payment.id);
+    modalOrder.close();
+    setLoading(false);
+    modalPay.open();
+
+    configUser.updateAuthState();
+  };
 
   return (
     <>
@@ -48,12 +73,14 @@ const ListPlans = () => {
               plan={plan}
               configUser={configUser}
               isActivePlan={plan.name.toLowerCase() === activeUserPlan}
+              modalOrder={modalOrder}
+              setSelectedPlan={setSelectedPlan}
             />
           ))}
         </div>
       </div>
 
-      {!modalPay.isOpen ? (
+      {modalPay.isOpen ? (
         <CustomModal
           icon={
             <div className={style.check}>
@@ -61,13 +88,45 @@ const ListPlans = () => {
             </div>
           }
           title={"Тариф успешно оплачен"}
-          description={`Подписка  активна. Музыка без ограничений уже доступна в вашем аккаунте.`}
+          description={`Подписка ${selectedPlan.name} активна. Музыка без ограничений уже доступна в вашем аккаунте.`}
           firstBtn={"Перейти к музыке"}
           firstHadleClick={redirectToMusic}
           secondBtn={"Закрыть"}
           secondHandleClick={onCloseModalPay}
         >
-          <div className={style.modal__content}>текст</div>
+          <div className={style.modal__content}>
+            <span className={style.modal__info}>
+              {selectedPlan.name} / {selectedPlan.durationDays} дней
+            </span>
+            <span className={style.modal__price}>{selectedPlan.price}₽</span>
+          </div>
+        </CustomModal>
+      ) : (
+        <></>
+      )}
+
+      {modalOrder.isOpen ? (
+        <CustomModal
+          icon={
+            <div className={style.shop}>
+              <ShoppingBag color="black" size={34} />
+            </div>
+          }
+          title={"Подтвердить покупку"}
+          description={`Вы оформляете тариф ${selectedPlan.name} на ${selectedPlan.durationDays} дней. Списание произойдёт сразу после подтверждения.`}
+          firstBtn={
+            loading ? "Идет оплата..." : `Оплатить ${selectedPlan.price}₽`
+          }
+          firstHadleClick={onPay}
+          secondBtn={"Отмена"}
+          secondHandleClick={onCancel}
+        >
+          <div className={style.modal__content}>
+            <span className={style.modal__info}>
+              {selectedPlan.name} / {selectedPlan.durationDays} дней
+            </span>
+            <span className={style.modal__price}>{selectedPlan.price}₽</span>
+          </div>
         </CustomModal>
       ) : (
         <></>

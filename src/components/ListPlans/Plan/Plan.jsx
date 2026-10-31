@@ -1,42 +1,28 @@
-
+import { useNavigate } from "react-router";
+import { ROUTES, STATUS_AUTH } from "../../../consts";
+import { getAuthCheckStatus } from "../../../helpers";
 import style from "./Plan.module.css";
 
+const Plan = ({
+  plan,
+  configUser,
+  isActivePlan,
+  modalOrder,
+  setSelectedPlan,
+}) => {
 
-const Plan = ({ plan, configUser, isActivePlan }) => {
-  // const modalOrder = useModal();
-  
+  const navigate = useNavigate();
 
-  // const [loading, setLoading] = useState(false);
-
-  // const navigate = useNavigate();
-
-  // const onOpenModal = () => {
-  //   if (isUnauthorizedError(configUser.error)) {
-  //     navigate(`/${ROUTES.login}`, { replace: true });
-  //     return;
-  //   }
-
-  //   modalOrder.open();
-  // };
-
-  // const onCancel = () => modalOrder.close();
+  const onOpenModal = () => {
+    if (getAuthCheckStatus(configUser) === STATUS_AUTH.guest) {
+      navigate(`/${ROUTES.login}`, { replace: true });
+      return;
+    }
+    setSelectedPlan(plan);
+    modalOrder.open();
+  };
 
 
-  // const onPay = async () => {
-  //   modalOrder.close();
-  //   modalPay.open();
-
-  //   setLoading(true);
-
-  //   const userId = configUser.user.user.id;
-  //   const planId = plan.name.toLowerCase();
-  //   const result = await createPayment({ userId, planId });
-
-  //   await getPayment(result.payment.id);
-  //   configUser.updateAuthState();
-
-  //   setLoading(false);
-  // };
 
   return (
     <>
@@ -50,6 +36,7 @@ const Plan = ({ plan, configUser, isActivePlan }) => {
           <button
             className={style.card__btn}
             disabled={configUser.loading}
+            onClick={onOpenModal}
           >
             Выбрать тариф
           </button>
@@ -65,8 +52,6 @@ const Plan = ({ plan, configUser, isActivePlan }) => {
       ) : (
         <></>
       )} */}
-
-      
     </>
   );
 };
