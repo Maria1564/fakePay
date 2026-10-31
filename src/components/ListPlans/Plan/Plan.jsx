@@ -4,6 +4,7 @@ import { isUnauthorizedError } from "../../../helpers";
 import { ROUTES } from "../../../consts";
 import { useNavigate } from "react-router";
 import { createPayment, getPayment } from "../../../api";
+import style from "./Plan.module.css";
 
 const Plan = ({ plan, configUser, isActivePlan }) => {
   const modalOrder = useModal();
@@ -42,14 +43,19 @@ const Plan = ({ plan, configUser, isActivePlan }) => {
 
   return (
     <>
-      <div>
-        <h3>{plan.name}</h3>
-        <p>
-          {plan.price} {plan.currency}
-        </p>
+      <div className={style.card}>
+        <h3 className={style.card__title}>{plan.name}</h3>
+        <div className={style.card__info}>
+          <span className={style.card__price}>{plan.price}₽</span>{" "}
+          <span className={style.card__days}>/ {plan.durationDays} дней</span>
+        </div>
         {!isActivePlan && (
-          <button onClick={onOpenModal} disabled={configUser.loading}>
-            Получить
+          <button
+            className={style.card__btn}
+            onClick={onOpenModal}
+            disabled={configUser.loading}
+          >
+            Выбрать тариф
           </button>
         )}
       </div>

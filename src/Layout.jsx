@@ -8,9 +8,10 @@ const Layout = () => {
   const configUser = useAuth();
 
   const onLogout = async () => {
-    // удаление токена из куки
     await logout(getToken());
+    // удаление токена из куки
     document.cookie = "token=; max-age=0; path=/";
+    
     configUser.updateAuthState();
   };
 

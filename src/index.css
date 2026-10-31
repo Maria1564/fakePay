@@ -1,0 +1,46 @@
+:root {
+  --primary: #121212;
+  --dark: #242424;
+  --black: #000000;
+  --red: #e61919;
+  --white: #ffffff;
+  --gray: #b3aaaa;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: var(--primary);
+  color: var(--white);
+  font-family: "Manrope", sans-serif;
+}
+
+p,
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+h1 {
+  font-size: 42px;
+}
+
+h2 {
+  font-size: 32px;
+}
+
+button {
+  outline: none;
+  border: none;
+  background-color: var(--white);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+button:hover {
+  opacity: 0.8;
+  transform: scale(0.98);
+}

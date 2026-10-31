@@ -1,16 +1,15 @@
-import "./App.css";
+import style from "./App.module.css";
 import ListPlans from "./components/ListPlans/ListPlans";
-import { useAuth } from "./hooks/useAuth";
 
 function App() {
-  const auth = useAuth();
-
-  console.log(auth.user);
-
   return (
-    <div className="">
-      <h1>Добро пожаловать на музыкальный сервис</h1>
-      <p>Слушайте музыку до посинения)</p>
+    <div className={style.home__container}>
+      <div className={style.home__hero}>
+        <h1 className={style.home__title}>
+          Добро пожаловать на музыкальный сервис
+        </h1>
+        <p className={style.home__description}>Слушайте музыку до посинения)</p>
+      </div>
       <ListPlans />
     </div>
   );

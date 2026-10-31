@@ -26,16 +26,18 @@ const ListPlans = () => {
   }, [configUser]);
 
   return (
-    <div className={styles.wrapper}>
-      Список тарифов
-      {plans?.map((plan) => (
-        <Plan
-          key={plan.id}
-          plan={plan}
-          configUser={configUser}
-          isActivePlan={plan.name.toLowerCase() === activeUserPlan}
-        />
-      ))}
+    <div className={styles.plans__wrapper}>
+      <h2>Список тарифов</h2>
+      <div className={styles.plans__list}>
+        {plans?.map((plan) => (
+          <Plan
+            key={plan.id}
+            plan={plan}
+            configUser={configUser}
+            isActivePlan={plan.name.toLowerCase() === activeUserPlan}
+          />
+        ))}
+      </div>
     </div>
   );
 };
