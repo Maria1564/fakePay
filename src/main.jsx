@@ -9,22 +9,28 @@ import ListPlans from "./components/ListPlans";
 import { ROUTES } from "./consts.js";
 import Layout from "./Layout.jsx";
 import AuthProvider from "./contexts/auth/AuthProvider.jsx";
+import ToastProvider from "./contexts/toast/ToastProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
   <BrowserRouter>
     <AuthProvider>
-      <Routes>
-        <Route path="/" element={<Navigate to={`/${ROUTES.home}`} replace />} />
+      <ToastProvider>
+        <Routes>
+          <Route
+            path="/"
+            element={<Navigate to={`/${ROUTES.home}`} replace />}
+          />
 
-        <Route path={ROUTES.register} element={<RegisterForm />} />
-        <Route path={ROUTES.login} element={<LoginForm />} />
+          <Route path={ROUTES.register} element={<RegisterForm />} />
+          <Route path={ROUTES.login} element={<LoginForm />} />
 
-        <Route path={ROUTES.home} element={<Layout />}>
-          <Route index element={<App />} />
-          <Route path={ROUTES.plans} element={<ListPlans />} />
-        </Route>
-      </Routes>
+          <Route path={ROUTES.home} element={<Layout />}>
+            <Route index element={<App />} />
+            <Route path={ROUTES.plans} element={<ListPlans />} />
+          </Route>
+        </Routes>
+      </ToastProvider>
     </AuthProvider>
   </BrowserRouter>,
   // </StrictMode>,

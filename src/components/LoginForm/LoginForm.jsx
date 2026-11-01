@@ -2,7 +2,7 @@ import style from "./LoginForm.module.css";
 import { login } from "../../api";
 import { Link, useNavigate } from "react-router";
 import { useToast } from "../../hooks/useToast";
-import { ROUTES } from "../../consts";
+import { ROUTES, STATUS_TOAST } from "../../consts";
 import { useFormField } from "../../hooks/useFormField";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -10,8 +10,8 @@ const LoginForm = () => {
   const email = useFormField("", "Поле обязательно");
   const password = useFormField("", "Поле обязательно");
 
-  const { text, isOpen, open } = useToast();
-
+  const { showToast } = useToast();
+  console.log(showToast);
   const navigate = useNavigate();
 
   const { updateAuthState } = useAuth();
@@ -30,7 +30,7 @@ const LoginForm = () => {
     });
 
     if (!response.ok) {
-      open(result.error);
+      showToast(result.error, STATUS_TOAST.error);
       return;
     }
 
@@ -70,8 +70,6 @@ const LoginForm = () => {
         <Link to={`/${ROUTES.register}`}>Регистрация</Link>
         <Link to={`/${ROUTES.home}`}>На главный</Link>
       </div>
-
-      {isOpen ? <div className="">{text}</div> : null}
     </>
   );
 };

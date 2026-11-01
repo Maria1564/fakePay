@@ -11,10 +11,13 @@
 body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   background-color: var(--primary);
   color: var(--white);
   font-family: "Manrope", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 p,
@@ -52,6 +55,6 @@ button:disabled {
 }
 
 button:disabled:hover {
-    transform: none;
-    opacity: 1;
+  transform: none;
+  opacity: 1;
 }

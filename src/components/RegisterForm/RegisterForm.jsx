@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router";
-import { ROUTES } from "../../consts";
+import { ROUTES, STATUS_TOAST } from "../../consts";
 import { useFormField } from "../../hooks/useFormField";
 import { register } from "../../api";
 import { useToast } from "../../hooks/useToast";
@@ -10,7 +10,7 @@ const RegisterForm = () => {
   const email = useFormField("", "Обязательное поле");
   const password = useFormField("", "Обязательное поле");
 
-  const toast = useToast();
+  const { showToast } = useToast();
 
   const navigate = useNavigate();
 
@@ -34,7 +34,7 @@ const RegisterForm = () => {
     const { response, result } = await register(formData);
 
     if (!response.ok) {
-      toast.open(result.error);
+      showToast(result.error, STATUS_TOAST.error, 5000);
       return;
     }
 
@@ -82,8 +82,6 @@ const RegisterForm = () => {
         <Link to={`/${ROUTES.login}`}>Вход</Link>
         <Link to={`/${ROUTES.home}`}>На главный</Link>
       </div>
-
-      {toast.isOpen ? <div className="">{toast.text}</div> : <></>}
     </>
   );
 };

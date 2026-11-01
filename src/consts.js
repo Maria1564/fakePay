@@ -9,5 +9,9 @@ export const STATUS_AUTH = {
   pending: "pending",
   error: "error",
   guest: "guest",
-  authenticated: "authenticated"
-}
+  authenticated: "authenticated",
+};
+
+export const STATUS_TOAST = {
+  error: "error",
+};
