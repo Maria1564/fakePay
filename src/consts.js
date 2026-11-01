@@ -14,4 +14,5 @@ export const STATUS_AUTH = {
 
 export const STATUS_TOAST = {
   error: "error",
+  success: "success",
 };

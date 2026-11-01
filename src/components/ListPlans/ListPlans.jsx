@@ -4,11 +4,12 @@ import { createPayment, getAllPlans, getPayment } from "../../api";
 import Plan from "./Plan";
 import { useAuth } from "../../hooks/useAuth";
 import { getAuthCheckStatus } from "../../helpers";
-import { ROUTES, STATUS_AUTH } from "../../consts";
+import { ROUTES, STATUS_AUTH, STATUS_TOAST } from "../../consts";
 import { useModal } from "../../hooks/useModal";
 import CustomModal from "../share/CustomModal";
 import { Check, ShoppingBag } from "lucide-react";
 import { useNavigate } from "react-router";
+import { useToast } from "../../hooks/useToast";
 
 const ListPlans = () => {
   const [plans, setPlan] = useState([]);
@@ -22,6 +23,8 @@ const ListPlans = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+
+  const {showToast} = useToast();
 
   useEffect(() => {
     getAllPlans().then((data) => setPlan(data.plans));
@@ -57,6 +60,9 @@ const ListPlans = () => {
     await getPayment(result.payment.id);
     modalOrder.close();
     setLoading(false);
+
+    showToast("Тариф успешно приобретён!", STATUS_TOAST.success, 5000);
+
     modalPay.open();
 
     configUser.updateAuthState();
