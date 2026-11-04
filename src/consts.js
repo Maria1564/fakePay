@@ -16,3 +16,14 @@ export const STATUS_TOAST = {
   error: "error",
   success: "success",
 };
+
+export const LINKS = [
+  {
+    link: ROUTES.home,
+    name: "Главная",
+  },
+  {
+    link: ROUTES.plans,
+    name: "Тарифы",
+  },
+];

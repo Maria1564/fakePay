@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router";
-import { ROUTES, STATUS_AUTH } from "../../consts";
+import { LINKS, ROUTES, STATUS_AUTH } from "../../consts";
 import { getAuthCheckStatus, getToken } from "../../helpers";
 import { useAuth } from "../../hooks/useAuth";
 import { logout } from "../../api";
@@ -19,15 +19,11 @@ const Header = () => {
   return (
     <div className={style.header}>
       <div className={style.header__nav}>
-        <NavLink className={style.header__link} to={`/${ROUTES.home}`}>
-          Главная
-        </NavLink>
-        <NavLink
-          className={style.header__link}
-          to={`/${ROUTES.home}/${ROUTES.plans}`}
-        >
-          Тарифы
-        </NavLink>
+        {LINKS.map((item) => (
+          <NavLink className={style.header__link} to={`/${item.link}`}>
+            {item.name}
+          </NavLink>
+        ))}
       </div>
 
       {getAuthCheckStatus(configUser) === STATUS_AUTH.authenticated ? (
