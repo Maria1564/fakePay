@@ -15,7 +15,15 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--primary);
+  background: linear-gradient(
+    135deg,
+    #121212 45%,
+    #211313 65%,
+    #491515 82%,
+    #861717 94%,
+    #e61919 100%
+  );
+  
   color: var(--white);
   font-family: "Manrope", sans-serif;
   height: 100vh;
