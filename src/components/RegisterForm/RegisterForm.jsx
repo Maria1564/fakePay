@@ -4,6 +4,7 @@ import { useFormField } from "../../hooks/useFormField";
 import { register } from "../../api";
 import { useToast } from "../../hooks/useToast";
 import { useAuth } from "../../hooks/useAuth";
+import Field from "../share/Field";
 
 const RegisterForm = () => {
   const name = useFormField("", "Обязательное поле");
@@ -57,15 +58,7 @@ const RegisterForm = () => {
           {name.errorMessage && (
             <p style={{ color: "red" }}>{name.errorMessage}</p>
           )}
-          <input
-            type="text"
-            placeholder="почта"
-            value={email.value}
-            onChange={(event) => email.onChange(event)}
-          />
-          {email.errorMessage && (
-            <p style={{ color: "red" }}>{email.errorMessage}</p>
-          )}
+          <Field field={email} placeholder={"почта"} />
           <input
             type="password"
             placeholder="пароль"
