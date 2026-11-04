@@ -8,12 +8,17 @@
   --green: #1ed65e;
 }
 
+#root {
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
   background-color: var(--primary);
   color: var(--white);
   font-family: "Manrope", sans-serif;
+  height: 100vh;
 }
 
 * {

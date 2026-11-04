@@ -1,10 +1,11 @@
-import style from "./LoginForm.module.css";
 import { login } from "../../api";
 import { Link, useNavigate } from "react-router";
 import { useToast } from "../../hooks/useToast";
 import { ROUTES, STATUS_TOAST } from "../../consts";
 import { useFormField } from "../../hooks/useFormField";
 import { useAuth } from "../../hooks/useAuth";
+import Field from "../share/Field";
+import style from "../RegisterForm/AuthForm.module.css"
 
 const LoginForm = () => {
   const email = useFormField("", "Поле обязательно");
@@ -40,37 +41,36 @@ const LoginForm = () => {
   };
 
   return (
-    <>
-      <div className={style.wrapper}>
-        <h1>Вход</h1>
-        <form action="">
-          <input
-            type="text"
-            placeholder="почта"
-            value={email.value}
-            onChange={(e) => email.onChange(e)}
-          />
-          {email.errorMessage && (
-            <p style={{ color: "red" }}>{email.errorMessage}</p>
-          )}
-          <input
-            type="password"
-            placeholder="пароль"
-            value={password.value}
-            onChange={(e) => password.onChange(e)}
-          />
-          {password.errorMessage && (
-            <p style={{ color: "red" }}>{password.errorMessage}</p>
-          )}
-          <button type="button" onClick={onLogin}>
-            Ок
+    <div className={style.form}>
+      <div className={style.form__wrapper}>
+        <h2 className={style.form__title}>Вход</h2>
+        <span className={style.form__text}>Рады видеть вас снова</span>
+        <form action="" className={style.form__fields}>
+          <Field field={email} placeholder={"почта"} />
+          <Field field={password} placeholder={"пароль"} typeField="password" />
+
+          <button
+            type="button"
+            onClick={onLogin}
+            className={style.form__button}
+          >
+            Войти
           </button>
         </form>
 
-        <Link to={`/${ROUTES.register}`}>Регистрация</Link>
-        <Link to={`/${ROUTES.home}`}>На главный</Link>
+        <div className={style.form__footer}>
+          <span className={style["form__footer-text"]}>
+            Нет аккаунта?{" "}
+            <Link className={style.form__link} to={`/${ROUTES.register}`}>
+              Зарегистрироваться
+            </Link>
+          </span>
+          <Link className={style.form__link} to={`/${ROUTES.home}`}>
+            На главный
+          </Link>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
