@@ -23,7 +23,7 @@ export const LINKS = [
     name: "Главная",
   },
   {
-    link: ROUTES.plans,
+    link: `${ROUTES.home}/${ROUTES.plans}`,
     name: "Тарифы",
   },
 ];

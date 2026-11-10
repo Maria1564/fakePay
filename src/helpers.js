@@ -13,27 +13,25 @@ export const getToken = () => {
   return cookies.token || "";
 };
 
-//проверка, не является ли пользователь null
-export const hasUser = (user) => {
-  return Boolean(user);
-};
-
 //проверка, связанна ли ошибка с авторизацией
 export const isUnauthorizedError = (error) => {
   return error?.status === 401;
 };
 
 //статус запроса на получение пользователя
-export const getAuthCheckStatus = ({ loading, error, user }) => {
+export const getAuthCheckStatus = ({ loading, error }) => {
   if (loading) {
     return STATUS_AUTH.pending;
   }
 
-  if (hasUser(user)) {
+  if (JSON.parse(localStorage.getItem("isAuth")) && getToken()) {
     return STATUS_AUTH.authenticated;
   }
-
-  if (isUnauthorizedError(error)) {
+  if (
+    isUnauthorizedError(error) ||
+    !JSON.parse(localStorage.getItem("isAuth")) ||
+    !getToken()
+  ) {
     return STATUS_AUTH.guest;
   }
 

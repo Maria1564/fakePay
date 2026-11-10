@@ -16,11 +16,13 @@ const Header = () => {
     configUser.updateAuthState();
   };
 
+  console.log(getAuthCheckStatus(configUser))
+
   return (
     <div className={style.header}>
       <div className={style.header__nav}>
         {LINKS.map((item) => (
-          <NavLink className={style.header__link} to={`/${item.link}`}>
+          <NavLink key={item.link} className={style.header__link} to={`/${item.link}`}>
             {item.name}
           </NavLink>
         ))}

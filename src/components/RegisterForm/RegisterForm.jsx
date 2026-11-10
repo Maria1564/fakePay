@@ -41,47 +41,44 @@ const RegisterForm = () => {
     }
 
     document.cookie = `token=${result.token}`;
+    localStorage.setItem("isAuth", true);
     updateAuthState();
     navigate(`/${ROUTES.home}`, { replace: true });
   };
 
   return (
-      <div className={style.form}>
-        <div className={style.form__wrapper}>
-          <h2 className={style.form__title}>Регистрация</h2>
-          <span className={style.form__text}>Начните слушать бесплатно</span>
-          <form action="" className={style.form__fields}>
-            <Field field={name} placeholder={"имя"} />
+    <div className={style.form}>
+      <div className={style.form__wrapper}>
+        <h2 className={style.form__title}>Регистрация</h2>
+        <span className={style.form__text}>Начните слушать бесплатно</span>
+        <form action="" className={style.form__fields}>
+          <Field field={name} placeholder={"имя"} />
 
-            <Field field={email} placeholder={"почта"} />
-            <Field
-              field={password}
-              placeholder={"пароль"}
-              typeField="password"
-            />
+          <Field field={email} placeholder={"почта"} />
+          <Field field={password} placeholder={"пароль"} typeField="password" />
 
-            <button
-              type="button"
-              onClick={onRegister}
-              className={`${style.form__button} ${style["form__button--red"]}`}
-            >
-              Создать аккаунт
-            </button>
-          </form>
+          <button
+            type="button"
+            onClick={onRegister}
+            className={`${style.form__button} ${style["form__button--red"]}`}
+          >
+            Создать аккаунт
+          </button>
+        </form>
 
-          <div className={style.form__footer}>
-            <span className={style["form__footer-text"]}>
-              Уже есть аккаунт{" "}
-              <Link className={style.form__link} to={`/${ROUTES.login}`}>
-                Войти
-              </Link>
-            </span>
-            <Link className={style.form__link} to={`/${ROUTES.home}`}>
-              На главный
+        <div className={style.form__footer}>
+          <span className={style["form__footer-text"]}>
+            Уже есть аккаунт{" "}
+            <Link className={style.form__link} to={`/${ROUTES.login}`}>
+              Войти
             </Link>
-          </div>
+          </span>
+          <Link className={style.form__link} to={`/${ROUTES.home}`}>
+            На главный
+          </Link>
         </div>
       </div>
+    </div>
   );
 };
 

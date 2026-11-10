@@ -5,7 +5,7 @@ import { ROUTES, STATUS_TOAST } from "../../consts";
 import { useFormField } from "../../hooks/useFormField";
 import { useAuth } from "../../hooks/useAuth";
 import Field from "../share/Field";
-import style from "../RegisterForm/AuthForm.module.css"
+import style from "../RegisterForm/AuthForm.module.css";
 
 const LoginForm = () => {
   const email = useFormField("", "Поле обязательно");
@@ -35,6 +35,7 @@ const LoginForm = () => {
     }
 
     document.cookie = `token=${result.token}`;
+    localStorage.setItem("isAuth", true);
     updateAuthState();
     navigate(`/${ROUTES.home}`, { replace: true });
   };

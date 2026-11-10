@@ -9,8 +9,8 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   const updateAuthState = () => {
+    console.log("call upadate");
     setLoading(true);
-
     getUser(getToken())
       .then(({ response, result }) => {
         if (!response.ok) {
@@ -21,12 +21,24 @@ const AuthProvider = ({ children }) => {
           setUser(result);
         }
       })
-      .finally(() => setLoading(false));
+      .finally(() => console.log("finaly") || setLoading(false));
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    updateAuthState();
+    console.log("useEffect");
+    const isAuth = JSON.parse(localStorage.getItem("isAuth"));
+    if (isAuth === null) {
+      localStorage.setItem("isAuth", false);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setLoading(false);
+      return;
+    }
+    if (isAuth && getToken()) {
+      updateAuthState();
+      console.log("auth");
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   return (
