@@ -9,7 +9,6 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   const updateAuthState = () => {
-    console.log("call upadate");
     setLoading(true);
     getUser(getToken())
       .then(({ response, result }) => {
@@ -21,11 +20,10 @@ const AuthProvider = ({ children }) => {
           setUser(result);
         }
       })
-      .finally(() => console.log("finaly") || setLoading(false));
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
-    console.log("useEffect");
     const isAuth = JSON.parse(localStorage.getItem("isAuth"));
     if (isAuth === null) {
       localStorage.setItem("isAuth", false);
@@ -35,7 +33,6 @@ const AuthProvider = ({ children }) => {
     }
     if (isAuth && getToken()) {
       updateAuthState();
-      console.log("auth");
     } else {
       setLoading(false);
     }

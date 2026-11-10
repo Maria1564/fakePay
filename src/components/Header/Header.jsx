@@ -16,7 +16,6 @@ const Header = () => {
     configUser.updateAuthState();
   };
 
-  console.log(getAuthCheckStatus(configUser))
 
   return (
     <div className={style.header}>
