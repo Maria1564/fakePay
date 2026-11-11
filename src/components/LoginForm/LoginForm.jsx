@@ -1,5 +1,5 @@
 import { login } from "../../api";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useToast } from "../../hooks/useToast";
 import { ROUTES, STATUS_TOAST } from "../../consts";
 import { useFormField } from "../../hooks/useFormField";
@@ -10,6 +10,9 @@ import style from "../RegisterForm/AuthForm.module.css";
 const LoginForm = () => {
   const email = useFormField("", "Поле обязательно");
   const password = useFormField("", "Поле обязательно");
+
+  const { state } = useLocation();
+  console.log("state >> ", state);
 
   const { showToast } = useToast();
   const navigate = useNavigate();
@@ -59,6 +62,13 @@ const LoginForm = () => {
         </form>
 
         <div className={style.form__footer}>
+          {state && state.fromPayment ? (
+            <div className={style.form__warning}>
+              Чтобы купить тариф, сначала войдите в аккаунт
+            </div>
+          ) : (
+            <></>
+          )}
           <span className={style["form__footer-text"]}>
             Нет аккаунта?{" "}
             <Link className={style.form__link} to={`/${ROUTES.register}`}>

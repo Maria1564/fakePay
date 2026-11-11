@@ -15,7 +15,7 @@ const Plan = ({
 
   const onOpenModal = () => {
     if (getAuthCheckStatus(configUser) === STATUS_AUTH.guest) {
-      navigate(`/${ROUTES.login}`, { replace: true });
+      navigate(`/${ROUTES.login}`, { replace: true, state: {fromPayment: true} });
       return;
     }
     setSelectedPlan(plan);
