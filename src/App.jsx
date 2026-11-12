@@ -1,7 +1,15 @@
+import { useMemo } from "react";
 import style from "./App.module.css";
-import ListPlans from "./components/ListPlans/ListPlans";
+import PlaylistOfTheDay from "./components/PlaylistOfTheDay";
 
 function App() {
+  const playlists = useMemo(
+    () => JSON.parse(localStorage.getItem("playlists")),
+    [],
+  );
+  
+  const playlistRandom = playlists[3];
+
   return (
     <div className={style.home__container}>
       <div className={style.home__hero}>
@@ -10,7 +18,8 @@ function App() {
         </h1>
         <p className={style.home__description}>Слушайте музыку до посинения)</p>
       </div>
-      <ListPlans />
+      {/* <ListPlans /> */}
+      <PlaylistOfTheDay playlist={playlistRandom} />
     </div>
   );
 }
