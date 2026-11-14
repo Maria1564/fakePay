@@ -3,6 +3,7 @@ export const ROUTES = {
   login: "login",
   register: "register",
   plans: "plans",
+  playlists: "playlists",
 };
 
 export const STATUS_AUTH = {
