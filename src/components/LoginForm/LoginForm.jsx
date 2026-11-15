@@ -12,7 +12,6 @@ const LoginForm = () => {
   const password = useFormField("", "Поле обязательно");
 
   const { state } = useLocation();
-  console.log("state >> ", state);
 
   const { showToast } = useToast();
   const navigate = useNavigate();

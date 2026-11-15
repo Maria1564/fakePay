@@ -10,7 +10,6 @@ const Playlists = () => {
   });
 
   const playlists = JSON.parse(localStorage.getItem("playlists")) || [];
-  console.log(playlists);
 
   return (
     <div className={style.playlists__container}>
@@ -21,18 +20,16 @@ const Playlists = () => {
         </Link>
       </div>
       {playlists.length ? (
-        console.log(playlists) || (
-          <div className={style.playlists__list}>
-            {playlists.splice(0, 4).map((item) => (
-              <PlaylistItem
-                key={item.id}
-                playlist={item}
-                isShow={item.id === isShowPanel.idPlaylist}
-                setIsShow={setIsShowPanel}
-              />
-            ))}
-          </div>
-        )
+        <div className={style.playlists__list}>
+          {playlists.splice(0, 4).map((item) => (
+            <PlaylistItem
+              key={item.id}
+              playlist={item}
+              isShow={item.id === isShowPanel.idPlaylist}
+              setIsShow={setIsShowPanel}
+            />
+          ))}
+        </div>
       ) : (
         <div>Список пуст</div>
       )}

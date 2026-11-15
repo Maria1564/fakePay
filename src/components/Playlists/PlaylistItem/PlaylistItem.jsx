@@ -11,7 +11,7 @@ const PlaylistItem = ({ playlist, isShow, setIsShow }) => {
   const configUser = useAuth();
   const navigate = useNavigate();
   const toast = useToast();
-  console.log(isShow);
+  
   const openPlaylist = () => {
     setIsShow({ idPlaylist: playlist.id });
   };
