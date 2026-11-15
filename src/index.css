@@ -1,15 +1,17 @@
 :root {
   --primary: #121212;
   --dark: #242424;
+  --dark-2: #2f2f2f;
   --black: #000000;
   --red: #e61919;
   --white: #ffffff;
   --gray: #b3aaaa;
   --green: #1ed65e;
+  --yellow: #ffff91;
 }
 
 #root {
-  min-height: 100vh; 
+  min-height: 100vh;
 }
 
 body {
@@ -26,6 +28,11 @@ body {
   color: var(--white);
   font-family: "Manrope", sans-serif;
   min-height: 100vh;
+  overflow: auto;
+}
+
+body.lock-scroll {
+  overflow: hidden;
 }
 
 * {
@@ -35,7 +42,8 @@ body {
 p,
 h1,
 h2,
-h3 {
+h3,
+h4 {
   margin: 0;
 }
 

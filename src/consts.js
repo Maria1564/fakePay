@@ -16,6 +16,7 @@ export const STATUS_AUTH = {
 export const STATUS_TOAST = {
   error: "error",
   success: "success",
+  warning: "warning",
 };
 
 export const LINKS = [

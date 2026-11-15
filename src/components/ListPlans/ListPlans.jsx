@@ -24,7 +24,7 @@ const ListPlans = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const {showToast} = useToast();
+  const { showToast } = useToast();
 
   useEffect(() => {
     getAllPlans().then((data) => setPlan(data.plans));
@@ -65,7 +65,7 @@ const ListPlans = () => {
 
     modalPay.open();
 
-    configUser.updateAuthState();
+    await configUser.updateAuthState();
   };
 
   return (

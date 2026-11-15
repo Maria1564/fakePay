@@ -39,7 +39,7 @@ const LoginForm = () => {
 
     document.cookie = `token=${result.token}`;
     localStorage.setItem("isAuth", true);
-    updateAuthState();
+    await updateAuthState();
     navigate(`/${ROUTES.home}`, { replace: true });
   };
 
@@ -62,10 +62,8 @@ const LoginForm = () => {
         </form>
 
         <div className={style.form__footer}>
-          {state && state.fromPayment ? (
-            <div className={style.form__warning}>
-              Чтобы купить тариф, сначала войдите в аккаунт
-            </div>
+          {state ? (
+            <div className={style.form__warning}>{state.message}</div>
           ) : (
             <></>
           )}

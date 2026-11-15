@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router";
-import { ROUTES, STATUS_AUTH } from "../../../consts";
-import { getAuthCheckStatus } from "../../../helpers";
+import { isGuest } from "../../../helpers";
 import style from "./Plan.module.css";
 
 const Plan = ({
@@ -10,19 +9,21 @@ const Plan = ({
   modalOrder,
   setSelectedPlan,
 }) => {
-
   const navigate = useNavigate();
 
   const onOpenModal = () => {
-    if (getAuthCheckStatus(configUser) === STATUS_AUTH.guest) {
-      navigate(`/${ROUTES.login}`, { replace: true, state: {fromPayment: true} });
+    if (
+      isGuest(
+        navigate,
+        configUser,
+        "Чтобы купить тариф, сначала войдите в аккаунт",
+      )
+    ) {
       return;
     }
     setSelectedPlan(plan);
     modalOrder.open();
   };
-
-
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { STATUS_AUTH } from "./consts";
+import { ROUTES, STATUS_AUTH } from "./consts";
 
 // получение токена из куки
 export const getToken = () => {
@@ -36,4 +36,22 @@ export const getAuthCheckStatus = ({ loading, error }) => {
   }
 
   return STATUS_AUTH.error;
+};
+
+//редирект на страницу входа с соообщением
+export const redirectToLoginFormWithWarning = (navigate, message) =>
+  navigate(`/${ROUTES.login}`, {
+    replace: true,
+    state: { message },
+  });
+
+//проверка, является ли пользователь гостем
+export const isGuest = (navigate, configUser, message) => {
+  
+  if (getAuthCheckStatus(configUser) === STATUS_AUTH.guest) {
+    redirectToLoginFormWithWarning(navigate, message);
+    return true;
+  }
+
+  return false;
 };

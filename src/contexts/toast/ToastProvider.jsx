@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import Toast from "./Toast";
 import { ToastContext } from "./ToastContext";
+import { STATUS_TOAST } from "../../consts";
 
 const ToastProvider = ({ children }) => {
   const [isShow, setIsShow] = useState(false);
@@ -20,7 +21,11 @@ const ToastProvider = ({ children }) => {
   };
 
   //показать тоаст
-  const showToast = (description, status, duration = 3000) => {
+  const showToast = (
+    description,
+    status = STATUS_TOAST.success,
+    duration = 3000,
+  ) => {
     if (timerId.current) {
       return;
     }

@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: absolute;
+  position: fixed;
   top: 14px;
   right: 14px;
   z-index: 30;
@@ -34,6 +34,10 @@
 
 .toast__indicator--success {
   background-color: var(--green);
+}
+
+.toast__indicator--warning {
+  background-color: var(--yellow);
 }
 
 .toast__description {

@@ -8,19 +8,24 @@ const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
 
-  const updateAuthState = () => {
+  const getAccountData = async () => {
+    const { response, result } = await getUser(getToken());
+
+    if (!response.ok) {
+      setError({ errorMess: result.error, status: response.status });
+      setUser(null);
+    } else {
+      setError(null);
+      setUser(result);
+    }
+  };
+
+  const updateAuthState = async () => {
     setLoading(true);
-    getUser(getToken())
-      .then(({ response, result }) => {
-        if (!response.ok) {
-          setError({ errorMess: result.error, status: response.status });
-          setUser(null);
-        } else {
-          setError(null);
-          setUser(result);
-        }
-      })
-      .finally(() => setLoading(false));
+
+    await getAccountData();
+
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -29,12 +34,8 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem("isAuth", false);
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setLoading(false);
-      return;
-    }
-    if (isAuth && getToken()) {
-      updateAuthState();
     } else {
-      setLoading(false);
+      getAccountData().then(() => setLoading(false));
     }
   }, []);
 
