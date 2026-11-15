@@ -19,12 +19,12 @@ export const isUnauthorizedError = (error) => {
 };
 
 //статус запроса на получение пользователя
-export const getAuthCheckStatus = ({ loading, error }) => {
+export const getAuthCheckStatus = ({ user, loading, error }) => {
   if (loading) {
     return STATUS_AUTH.pending;
   }
 
-  if (JSON.parse(localStorage.getItem("isAuth")) && getToken()) {
+  if (JSON.parse(localStorage.getItem("isAuth")) && getToken() && user) {
     return STATUS_AUTH.authenticated;
   }
   if (
@@ -47,7 +47,6 @@ export const redirectToLoginFormWithWarning = (navigate, message) =>
 
 //проверка, является ли пользователь гостем
 export const isGuest = (navigate, configUser, message) => {
-  
   if (getAuthCheckStatus(configUser) === STATUS_AUTH.guest) {
     redirectToLoginFormWithWarning(navigate, message);
     return true;
