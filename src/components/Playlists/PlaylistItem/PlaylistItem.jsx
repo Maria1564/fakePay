@@ -11,7 +11,7 @@ const PlaylistItem = ({ playlist, isShow, setIsShow }) => {
   const configUser = useAuth();
   const navigate = useNavigate();
   const toast = useToast();
-  
+
   const openPlaylist = () => {
     setIsShow({ idPlaylist: playlist.id });
   };
@@ -32,6 +32,8 @@ const PlaylistItem = ({ playlist, isShow, setIsShow }) => {
       toast.showToast("Выберите тариф", STATUS_TOAST.warning);
       return;
     }
+
+    alert("Играет музыка... туц туц туц");
   };
 
   const closePanel = () => {

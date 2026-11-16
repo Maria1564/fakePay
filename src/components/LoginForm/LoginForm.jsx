@@ -37,7 +37,7 @@ const LoginForm = () => {
     }
 
     document.cookie = `token=${result.token}`;
-    localStorage.setItem("isAuth", true);
+    sessionStorage.setItem("isAuth", true);
     await updateAuthState();
     navigate(`/${ROUTES.home}`, { replace: true });
   };

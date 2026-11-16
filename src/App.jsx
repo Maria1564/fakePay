@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import style from "./App.module.css";
 import PlaylistOfTheDay from "./components/PlaylistOfTheDay";
 import Playlists from "./components/Playlists";
+import TrackListSection from "./components/TrackListSection";
 
 function App() {
   const playlists = useMemo(
@@ -21,6 +22,8 @@ function App() {
       </div>
       <PlaylistOfTheDay playlist={playlistRandom} />
       <Playlists />
+
+      <TrackListSection />
     </div>
   );
 }

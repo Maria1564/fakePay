@@ -41,7 +41,7 @@ const RegisterForm = () => {
     }
 
     document.cookie = `token=${result.token}`;
-    localStorage.setItem("isAuth", true);
+    sessionStorage.setItem("isAuth", true);
     updateAuthState();
     navigate(`/${ROUTES.home}`, { replace: true });
   };

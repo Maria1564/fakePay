@@ -53,7 +53,9 @@ export const logout = async (token) => {
 export const getAllPlans = async () => {
   const response = await fetch("http://localhost:3001/api/plans");
 
-  return await response.json();
+  const result = await response.json();
+
+  return { response, result };
 };
 
 /*************************  Оплата ************************/
@@ -72,4 +74,15 @@ export const createPayment = async (data) => {
 //запрос на проверку оплаты, и получение данных об оплате
 export const getPayment = async (paymentId) => {
   await fetch(`http://localhost:3001/api/payments/${paymentId}`);
+};
+
+/****************** Треки ********************/
+
+//получение списка всех треков
+export const getAllTracks = async () => {
+  const response = await fetch("http://localhost:3001/api/tracks");
+
+  const result = await response.json();
+  console.log(response, result)
+  return { response, result };
 };

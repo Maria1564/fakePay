@@ -4,6 +4,7 @@ export const ROUTES = {
   register: "register",
   plans: "plans",
   playlists: "playlists",
+  tracks: "tracks",
 };
 
 export const STATUS_AUTH = {

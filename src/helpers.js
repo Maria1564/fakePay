@@ -24,12 +24,12 @@ export const getAuthCheckStatus = ({ user, loading, error }) => {
     return STATUS_AUTH.pending;
   }
 
-  if (JSON.parse(localStorage.getItem("isAuth")) && getToken() && user) {
+  if (JSON.parse(sessionStorage.getItem("isAuth")) && getToken() && user) {
     return STATUS_AUTH.authenticated;
   }
   if (
     isUnauthorizedError(error) ||
-    !JSON.parse(localStorage.getItem("isAuth")) ||
+    !JSON.parse(sessionStorage.getItem("isAuth")) ||
     !getToken()
   ) {
     return STATUS_AUTH.guest;

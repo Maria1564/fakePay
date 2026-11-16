@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import style from "./ListPlans.module.css";
 import { createPayment, getAllPlans, getPayment } from "../../api";
 import Plan from "./Plan";
@@ -10,10 +10,11 @@ import CustomModal from "../share/CustomModal";
 import { Check, ShoppingBag } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useToast } from "../../hooks/useToast";
+import { useFetch } from "../../hooks/useFetch";
 
 const ListPlans = () => {
-  const [plans, setPlan] = useState([]);
   const configUser = useAuth();
+  const { data, isLoading } = useFetch(getAllPlans);
 
   const [selectedPlan, setSelectedPlan] = useState(null);
 
@@ -26,10 +27,6 @@ const ListPlans = () => {
 
   const { showToast } = useToast();
 
-  useEffect(() => {
-    getAllPlans().then((data) => setPlan(data.plans));
-  }, []);
-
   const activeUserPlan = useMemo(() => {
     if (
       getAuthCheckStatus(configUser) === STATUS_AUTH.authenticated &&
@@ -40,6 +37,9 @@ const ListPlans = () => {
 
     return "";
   }, [configUser]);
+  if (isLoading) {
+    return <h1>Загрузка</h1>;
+  }
 
   const onCloseModalPay = () => modalPay.close();
 
@@ -73,7 +73,7 @@ const ListPlans = () => {
       <div className={style.plans__wrapper}>
         <h2>Список тарифов</h2>
         <div className={style.plans__list}>
-          {plans?.map((plan) => (
+          {data.plans?.map((plan) => (
             <Plan
               key={plan.id}
               plan={plan}

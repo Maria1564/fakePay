@@ -1,0 +1,22 @@
+.track-section__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  margin-bottom: 60px;
+}
+
+.track-section__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.track-section__title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.track-section__link {
+  color: var(--gray);
+  text-decoration: none;
+}

@@ -29,9 +29,9 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const isAuth = JSON.parse(localStorage.getItem("isAuth"));
+    const isAuth = JSON.parse(sessionStorage.getItem("isAuth"));
     if (isAuth === null) {
-      localStorage.setItem("isAuth", false);
+      sessionStorage.setItem("isAuth", false);
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setLoading(false);
     } else {
