@@ -4,7 +4,9 @@ import { useFetch } from "../../../hooks/useFetch";
 const TrackList = () => {
   const { isLoading } = useFetch(getAllTracks);
 
-    console.log(isLoading)
+  if (isLoading) {
+    return <></>;
+  }
 
   return (
     <div>
