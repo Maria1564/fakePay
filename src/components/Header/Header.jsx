@@ -12,16 +12,19 @@ const Header = () => {
     await logout(getToken());
     // удаление токена из куки
     document.cookie = "token=; max-age=0; path=/";
-
+    sessionStorage.setItem("isAuth", false);
     configUser.updateAuthState();
   };
-
 
   return (
     <div className={style.header}>
       <div className={style.header__nav}>
         {LINKS.map((item) => (
-          <NavLink key={item.link} className={style.header__link} to={`/${item.link}`}>
+          <NavLink
+            key={item.link}
+            className={style.header__link}
+            to={`/${item.link}`}
+          >
             {item.name}
           </NavLink>
         ))}

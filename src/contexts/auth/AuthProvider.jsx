@@ -34,6 +34,12 @@ const AuthProvider = ({ children }) => {
       sessionStorage.setItem("isAuth", false);
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setLoading(false);
+      return;
+    }
+
+    if (!JSON.parse(sessionStorage.getItem("isAuth"))) {
+      console.log("ff")
+      setLoading(false);
     } else {
       getAccountData().then(() => setLoading(false));
     }
